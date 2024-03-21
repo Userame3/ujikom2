@@ -24,7 +24,7 @@ class StoreMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'jenis_id' => 'required',
+            'kategori_id' => 'required',
             'nama_menu' => 'required',
             'harga' => 'required',
             'stok' => 'required',

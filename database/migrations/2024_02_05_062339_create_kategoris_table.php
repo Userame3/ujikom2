@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('kategoris', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('jenis_id')->References('id')->on('jenis')->cascadeOnDelete();
             $table->string('nama_kategori');
             $table->timestamps();
         });

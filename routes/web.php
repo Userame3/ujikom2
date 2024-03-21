@@ -58,6 +58,8 @@ Route::group(['middleware' => 'auth'], function () {
     //route export import
     Route::get('export/menu', [MenuController::class, 'exportData'])->name('export-menu');
     Route::post('menu/import', [MenuController::class, 'importData'])->name('menu.import');
+    Route::get('export-pdf/menu', [MenuController::class, 'exportPDF'])->name('menu-export-pdf');
+
 
     Route::get('export/jenis', [JenisController::class, 'exportData'])->name('export-jenis');
     Route::post('jenis/import', [JenisController::class, 'importData'])->name('import-jenis');
@@ -67,13 +69,13 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('export/titipan', [TitipanController::class, 'exportData'])->name('export-titipan');
     Route::post('titipan/import', [TitipanController::class, 'importData'])->name('import-titipan');
-    
+    Route::get('export-pdf/titipan', [TitipanController::class, 'exportPDF'])->name('titipan-export-pdf');
+
     Route::get('export/kategori', [KategoriController::class, 'exportData'])->name('export-kategori');
     Route::post('kategori/import', [KategoriController::class, 'importData'])->name('import-kategori');
-    
+
     Route::get('export/detailTransaksi', [DetailTransaksiController::class, 'exportData'])->name('export-detail_transaksi');
 });
-Route::get('/export-pdf', [PDFController::class, 'exportPDF'])->name('export-pdf');
 
 // Route::group(['middleware' => ['cekUserLogin:admin']], function () {
 

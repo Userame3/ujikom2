@@ -42,7 +42,7 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formInputmenu"><i class="fa fa-plus-square"></i> Tambah menu</button>
 
                                 <button class="btn btn-info" data-toggle="modal" data-target="#formInputMenu"><i class="fa fa-file-pdf-o"></i> Import</button>
-                                <a href="{{ route('export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
+                                <a href="{{ route('menu-export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
                                 <a class="btn btn-success" href="{{route('export-menu')}}"><i class="fa fa-file-excel-o"></i>Export</a>
                             </div>
                             <div class="table-responsive">
@@ -52,7 +52,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Jenis Id</th>
+                                                <th>Kategori Id</th>
                                                 <th>Nama menu</th>
                                                 <th>Harga</th>
                                                 <th>Stok</th>
@@ -65,14 +65,14 @@
                                             @foreach ($menu as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->nama_jenis }}</td>
+                                                <td>{{ $item->nama_kategori }}</td>
                                                 <td>{{ $item->nama_menu }}</td>
                                                 <td>{{ $item->harga }}</td>
                                                 <td>{{ $item->stok }}</td>
                                                 <td><img class="img-fluid" style="max-width: 100px;" src="{{ asset('storage/menu-image/' .$item->image)}}" alt="Tidak ada gambar"></td>
                                                 <td>{{ $item->deskripsi }}</td>
                                                 <td>
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputmenu" data-mode="edit" data-id="{{ $item->id }}" data-jenis_id="{{ $item->jenis_id }}" data-nama_menu="{{ $item->nama_menu }}" data-harga="{{ $item->harga }}" data-stok="{{ $item->stok}}" data-image="{{ $item->image }}" data-deskripsi="{{ $item->deskripsi }}">
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputmenu" data-mode="edit" data-id="{{ $item->id }}" data-kategori_id="{{ $item->kategori_id }}" data-nama_menu="{{ $item->nama_menu }}" data-harga="{{ $item->harga }}" data-stok="{{ $item->stok}}" data-image="{{ $item->image }}" data-deskripsi="{{ $item->deskripsi }}">
                                                         <i class='fa fa-edit'></i> Edit
                                                     </button>
                                                     <!-- <form action="menu/{{ $item->id}}" method="post" style="display :inline"> -->
@@ -129,7 +129,7 @@
                     console.log('modal')
                     const btn = $(e.relatedTarget)
                     const mode = btn.data('mode')
-                    const jenis_id = btn.data('jenis_id')
+                    const kategori_id = btn.data('kategori_id')
                     const nama_menu = btn.data('nama_menu')
                     const harga = btn.data('harga')
                     const stok = btn.data('stok')
@@ -139,7 +139,7 @@
                     const modal = $(this)
                     if (mode === 'edit') {
                         modal.find('.modal-title').text('Edit menu')
-                        modal.find('#jenis_id').val(jenis_id)
+                        modal.find('#kategori_id').val(kategori_id)
                         modal.find('#nama_menu').val(nama_menu)
                         modal.find('#harga').val(harga)
                         modal.find('#stok').val(stok)
@@ -150,7 +150,7 @@
                         modal.find('#method').html('@method("PATCH")')
                     } else {
                         modal.find('.modal-title').text('Input menu')
-                        modal.find('#jenis_id').val('')
+                        modal.find('#kategori_id').val('')
                         modal.find('#nama_menu').val('')
                         modal.find('#harga').val('')
                         modal.find('#stok').val('')

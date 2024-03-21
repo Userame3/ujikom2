@@ -15,6 +15,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\TitipanExport;
 use App\Imports\TitipanImport;
+use App\Models\Kategori;
+use Dompdf\Dompdf;
 
 class TitipanController extends Controller
 {
@@ -22,21 +24,22 @@ class TitipanController extends Controller
     {
         try {
             $data['titipan'] = DB::table('titipans')
-                ->join('jenis', 'titipans.jenis_id', '=', 'jenis.id')
-                ->select('Titipans.*', 'jenis.nama_jenis', 'jenis.id as idJenis')->orderBy('created_at', 'DESC')->get();
-            $jenis = Jenis::get();
+                ->join('kategoris', 'titipans.kategori_id', '=', 'kategoris.id')
+                ->select('Titipans.*', 'kategoris.nama_kategori', 'kategoris.id as idKategori')->orderBy('created_at', 'DESC')->get();
+            $kategori = Kategori::get();
             return view('titipan.index', [
                 'page' => 'Titipan',
                 'section' => 'Kelola data',
-            ], compact('jenis'))->with($data);
+            ], compact('kategori'))->with($data);
         } catch (QueryException | Exception | PDOException $error) {
-            $this->failResponse($error->getCode());
+            return $error->getMessage();
+            // $this->failResponse($error->getCode());
         }
     }
 
     public function store(StoreTitipanRequest $request)
     {
-        $data['jenis_id'] = $request->jenis_id;
+        $data['kategori_id'] = $request->kategori_id;
         $data['nama_produk'] = $request->nama_produk;
         $data['nama_supplier'] = $request->nama_supplier;
         $data['harga_beli'] = $request->harga_beli;
@@ -51,8 +54,8 @@ class TitipanController extends Controller
 
     public function update(UpdateTitipanRequest $request, Titipan $titipan)
     {
-        
-        $data['jenis_id'] = $request->jenis_id;
+
+        $data['kategori_id'] = $request->kategori_id;
         $data['nama_produk'] = $request->nama_produk;
         $data['nama_supplier'] = $request->nama_supplier;
         $data['harga_beli'] = $request->harga_beli;
@@ -85,5 +88,27 @@ class TitipanController extends Controller
     {
         Excel::import(new TitipanImport, request()->file('import'));
         return redirect('titipan')->with('success', 'Import data Titipan berhasil');
+    }
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = Titipan::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('titipan.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 }

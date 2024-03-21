@@ -10,10 +10,10 @@ class Menu extends Model
     use HasFactory;
 
     protected $table = 'menus';
-    protected $fillable = ['jenis_id', 'nama_menu', 'harga','stok', 'image', 'deskripsi'];
+    protected $fillable = ['kategori_id', 'nama_menu', 'harga', 'stok', 'image', 'deskripsi'];
 
-    public function jenis()
+    public function kategori()
     {
-        return $this->belongsTo(Jenis::class, 'jenis_id');
+        return $this->belongsTo(Kategori::class, 'kategori_id');
     }
 }

@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('detail_transaksis', function (Blueprint $table) {
             $table->id();
             $table->foreignId('id_transaksi')->References('id')->on('transaksis')->cascadeOnDelete();
-            $table->foreignId('id_menu')->references('id')->on('menus')->cascadeOnDelete();
+            $table->foreignId('id_menu')->nullable()->references('id')->on('menus')->cascadeOnDelete();
+            $table->foreignId('id_titipan')->nullable()->references('id')->on('titipans')->cascadeOnDelete();
             $table->unsignedInteger('jumlah');
             $table->double('subtotal');
             $table->timestamps();

@@ -12,27 +12,16 @@
                     @csrf
                     <div id="method"></div>
                     <div class="form-group row">
-                        <label for="jenis_id" class="col-sm-4 col-form-label">Jenis</label>
+                        <label for="kategori_id" class="col-sm-4 col-form-label">Jenis</label>
                         <div class="col-sm-8">
-                            <select class="form-control" name="jenis_id" id="jenis_id" required>
+                            <select class="form-control" name="kategori_id" id="kategori_id" required>
                                 <option value="">Pilih Jenis</option>
-                                @foreach ($jenis as $item)
+                                @foreach ($kategori as $item)
                                 <option value="{{ $item->id }}">{{ $item->nama_jenis  }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
-
-                    <!-- <div class="form-group row">
-                        <label for="jenis_id" class="col-sm-4 col-form-label">Jenis<span class="req">*</span></label>
-                        <select class="form-control col-sm-8" name="jenis_id" id="jenis_id">
-                            @foreach ($jenis as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_jenis  }}
-                            <option value="">Pilih Jenis</option>
-                            </option>
-                            @endforeach
-                        </select>
-                    </div> -->
 
                     <div class="form-group row">
                         <label for="nama_produk" class="col-sm-4 col-form-label">Nama Produk</label>

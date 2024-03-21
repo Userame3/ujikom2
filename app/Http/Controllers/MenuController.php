@@ -14,6 +14,9 @@ use PDOException;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MenuExport;
 use App\Imports\MenuImport;
+use App\Models\Kategori;
+use App\Models\Titipan;
+use Dompdf\Dompdf;
 
 class MenuController extends Controller
 {
@@ -26,13 +29,13 @@ class MenuController extends Controller
     {
         try {
             $data['menu'] = DB::table('menus')
-                ->join('jenis', 'menus.jenis_id', '=', 'jenis.id')
-                ->select('menus.*', 'jenis.nama_jenis', 'jenis.id as idJenis')->orderBy('created_at', 'DESC')->get();;
-            $jenis = Jenis::get();
+                ->join('kategoris', 'menus.kategori_id', '=', 'kategoris.id')
+                ->select('menus.*', 'kategoris.nama_kategori', 'kategoris.id as idKategori')->orderBy('created_at', 'DESC')->get();;
+            $kategori = Kategori::get();
             return view('Menu.index', [
                 'page' => 'menu',
                 'section' => 'Kelola data',
-            ], compact('jenis'))->with($data);
+            ], compact('kategori'))->with($data);
         } catch (QueryException | Exception | PDOException $error) {
             $this->failResponse($error->getCode());
         }
@@ -53,7 +56,7 @@ class MenuController extends Controller
         $path = 'menu-image/' . $filename;
         Storage::disk('public')->put($path, file_get_contents($image));
 
-        $data['jenis_id'] = $request->jenis_id;
+        $data['kategori_id'] = $request->kategori_id;
         $data['nama_menu'] = $request->nama_menu;
         $data['harga'] = $request->harga;
         $data['stok'] = $request->stok;
@@ -93,7 +96,7 @@ class MenuController extends Controller
             $data['image'] = $menu->image;
         }
 
-        $data['jenis_id'] = $request->jenis_id;
+        $data['kategori_id'] = $request->kategori_id;
         $data['nama_menu'] = $request->nama_menu;
         $data['harga'] = $request->harga;
         $data['stok'] = $request->stok;
@@ -135,10 +138,42 @@ class MenuController extends Controller
     public function importData()
     {
         try {
-            Excel::import(new MenuImport, request()->file('import'));
+            $data = Excel::toArray(new MenuImport, request()->file('import'));
+            foreach ($data as $d) {
+                Menu::create([
+                    'kategori_id' => $d[0]['jenis_id'],
+                    'nama_menu' => $d[0]['menu'],
+                    'harga' => $d[0]['harga'],
+                    'stok' => $d[0]['stok'],
+                    'image' => $d[0]['image'],
+                    'deskripsi' => $d[0]['deskripsi']
+                ]);
+            }
             return redirect()->back()->with('success', 'Import data menu berhasil');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Gagal mengimpor data menu: ' . $e->getMessage());
         }
+    }
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = Menu::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('menu.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 }

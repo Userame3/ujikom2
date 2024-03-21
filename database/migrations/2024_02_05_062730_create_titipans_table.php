@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('titipans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('jenis_id')->References('id')->on('jenis')->cascadeOnDelete();
+            $table->foreignId('kategori_id')->References('id')->on('kategoris')->cascadeOnDelete();
             $table->string('nama_produk');
             $table->string('nama_supplier');
             $table->double('harga_beli');

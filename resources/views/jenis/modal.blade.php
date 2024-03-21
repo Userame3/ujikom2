@@ -17,6 +17,8 @@
               <input type="text" class="form-control" name="nama_jenis" id="nama_jenis">
             </div>
           </div>
+
+
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </form>

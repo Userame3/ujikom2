@@ -43,7 +43,7 @@
 
                                 <button class="btn btn-info" data-toggle="modal" data-target="#formInputtitipan"><i class="fa fa-file-excel-o"></i> Import</button>
                                 <a class="btn btn-success" href="{{route('export-titipan')}}"><i class="fa fa-file-excel-o"></i>Export</a>
-                                <a href="{{ route('export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
+                                <a href="{{ route('titipan-export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
 
 
                             </div>
@@ -54,7 +54,7 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Jenis</th>
+                                                <th>Nama Kategori</th>
                                                 <th>Nama Produk</th>
                                                 <th>Nama Supplier</th>
                                                 <th>Harga beli</th>
@@ -67,7 +67,7 @@
                                             @foreach ($titipan as $item)
                                             <tr>
                                                 <td>{{ $loop->iteration }}</td>
-                                                <td>{{ $item->nama_jenis }}</td>
+                                                <td>{{ $item->nama_kategori }}</td>
                                                 <td>{{ $item->nama_produk }}</td>
                                                 <td>{{ $item->nama_supplier }}</td>
                                                 <td>{{ $item->harga_beli }}</td>
@@ -75,7 +75,7 @@
                                                 <td>{{ $item->stok }}</td>
                                                 <td>
 
-                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputTitipan" data-mode="edit" data-id="{{ $item->id }}" data-jenis_id="{{ $item->jenis_id }}" data-nama_produk="{{ $item->nama_produk }}" data-nama_supplier="{{ $item->nama_supplier }}" data-harga_beli="{{ $item->harga_beli }}" data-harga_jual="{{ $item->harga_jual }}" data-stok="{{ $item->stok}}">
+                                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputTitipan" data-mode="edit" data-id="{{ $item->id }}" data-kategori_id="{{ $item->kategori_id }}" data-nama_produk="{{ $item->nama_produk }}" data-nama_supplier="{{ $item->nama_supplier }}" data-harga_beli="{{ $item->harga_beli }}" data-harga_jual="{{ $item->harga_jual }}" data-stok="{{ $item->stok}}">
                                                         <i class='fa fa-edit'></i> Edit
                                                     </button>
                                                     <!-- <form action="titipan/{{ $item->id}}" method="post" style="display :inline"> -->
@@ -133,7 +133,7 @@
                     console.log('modal')
                     const btn = $(e.relatedTarget)
                     const mode = btn.data('mode')
-                    const jenis_id = btn.data('jenis_id')
+                    const kategori_id = btn.data('kategori_id')
                     const nama_produk = btn.data('nama_produk')
                     const nama_supplier = btn.data('nama_supplier')
                     const harga_beli = btn.data('harga_beli')
@@ -143,7 +143,7 @@
                     const modal = $(this)
                     if (mode === 'edit') {
                         modal.find('.modal-title').text('Edit titipan')
-                        modal.find('#jenis_id').val(jenis_id)
+                        modal.find('#kategori_id').val(kategori_id)
                         modal.find('#nama_produk').val(nama_produk)
                         modal.find('#nama_supplier').val(nama_supplier)
                         modal.find('#harga_beli').val(harga_beli)
@@ -153,7 +153,7 @@
                         modal.find('#method').html('@method("PATCH")')
                     } else {
                         modal.find('.modal-title').text('Input Titipan')
-                        modal.find('#jenis_id').val('')
+                        modal.find('#kategori_id').val('')
                         modal.find('#nama_produk').val('')
                         modal.find('#nama_supplier').val('')
                         modal.find('#harga_beli').val('')

@@ -11,6 +11,7 @@ use Exception;
 use PDOException;
 use App\Exports\KategoriExport;
 use App\Imports\KategoriImport;
+use App\Models\Jenis;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -19,18 +20,29 @@ class KategoriController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+    //  * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $kategori = Kategori::all(); // Mendapatkan data kategori dari model
-
-        return view('kategori.index', compact('kategori')); // Meneruskan variabel $kategori ke view
+        try {
+            $data['kategori'] = DB::table('kategoris')
+                ->join('jenis', 'kategoris.jenis_id', '=', 'jenis.id')
+                ->select('kategoris.*', 'jenis.nama_jenis', 'jenis.id as idJenis')->orderBy('created_at', 'DESC')->get();;
+            $jenis = Jenis::get();
+            return view('Kategori.index', [
+                'page' => 'kategori',
+                'section' => 'Kelola data',
+            ], compact('jenis'))->with($data);
+        } catch (QueryException | Exception | PDOException $error) {
+            return $error->getMessage();
+            // $this->failResponse($error->getCode());
+        } // Meneruskan variabel $kategori ke view
     }
 
 
     public function store(StoreKategoriRequest $request)
     {
+        $data['kategori_id'] = $request->kategori_id;
         try {
             DB::beginTransaction();
             Kategori::create($request->all());
@@ -38,16 +50,17 @@ class KategoriController extends Controller
             return redirect('kategori')->with('success', 'Kategori berhasil ditambahkan!');
         } catch (QueryException | Exception | PDOException $error) {
             DB::rollBack();
-            $this->failResponse($error->getMessage(), $error->getCode());
+            return $error->getMessage();
+            // $this->failResponse($error->getMessage(), $error->getCode());
         }
     }
 
     public function update(StoreKategoriRequest $request, Kategori $kategori)
     {
+        $data['kategori_id'] = $request->kategori_id;
         try {
             DB::beginTransaction();
             $kategori->update($request->all());
-            DB::commit();
             return redirect('kategori')->with('success', 'Kategori berhasil diupdate!');
         } catch (QueryException | Exception | PDOException $error) {
             DB::rollBack();

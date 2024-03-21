@@ -68,8 +68,8 @@
             @foreach ($transaksi->detailTransaksi as $item)
             <tr>
                 <td>{{ $item->jumlah }}</td>
-                <td>{{ $item->menu->nama_menu }}</td>
-                <td>{{ number_format($item->menu->harga, 0, ",", ",") }}</td>
+                <td>{{ $item->menu ? $item->menu->nama_menu : $item->titipan->nama_produk }}</td>
+                <td>{{ number_format($item->menu ? $item->menu->harga : $item->titipan->harga_jual, 0, ",", ",") }}</td>
                 <td>{{ number_format($item->subtotal, 0, ",", ",") }}</td>
             </tr>
             @endforeach

@@ -17,6 +17,20 @@
               <input type="text" class="form-control" name="nama_kategori" id="nama_kategori">
             </div>
           </div>
+
+
+          <div class="form-group row">
+            <label for="jenis_id" class="col-sm-4 col-form-label">Jenis</label>
+            <div class="col-sm-8">
+              <select class="form-control" name="jenis_id" id="jenis_id" required>
+                <option value="">Pilih Jenis</option>
+                @foreach ($jenis as $item)
+                <option value="{{ $item->id }}">{{ $item->nama_jenis  }}</option>
+                @endforeach
+              </select>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-primary">Submit</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </form>

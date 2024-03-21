@@ -11,19 +11,6 @@
     <div class="x_panel">
       <div class="x_title">
         <h1>kategori </h1>
-        <!-- <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul> -->
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
@@ -65,6 +52,7 @@
                     <tr>
                       <th>No</th>
                       <th>Name kategori</th>
+                      <th>Name Jenis</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -73,8 +61,9 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $item->nama_kategori }}</td>
+                      <td>{{ $item->nama_jenis }}</td>
                       <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputkategori" data-mode="edit" data-id="{{ $item->id }}" data-nama_kategori="{{ $item->nama_kategori }}">
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputkategori" data-mode="edit" data-id="{{ $item->id }}" data-nama_kategori="{{ $item->nama_kategori }}" data-jenis_id="{{ $item->jenis_id }}">
                           <i class='fa fa-edit'></i> Edit
                         </button>
                         <form action="{{ route('kategori.destroy', $item->id) }}" method="POST" class="d-inline form-delete" style="display:inline;">
@@ -128,16 +117,19 @@
           const btn = $(e.relatedTarget)
           const mode = btn.data('mode')
           const nama_kategori = btn.data('nama_kategori')
+          const jenis_id = btn.data('jenis_id')
           const id = btn.data('id')
           const modal = $(this)
           if (mode === 'edit') {
             modal.find('.modal-title').text('Edit kategori')
             modal.find('#nama_kategori').val(nama_kategori)
+            modal.find('#jenis_id').val(jenis_id)
             modal.find('.modal-body form').attr('action', '{{ url("kategori") }}/' + id)
             modal.find('#method').html('@method("PATCH")')
           } else {
             modal.find('.modal-title').text('Input kategori')
             modal.find('#nama_kategori').val('')
+            modal.find('#jenis_id').val('')
             modal.find('#method').html('')
             modal.find('.modal-body form').attr('action', '{{ url("kategori") }}')
           }

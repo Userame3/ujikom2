@@ -65,6 +65,7 @@
                     <tr>
                       <th>No</th>
                       <th>Name Jenis</th>
+                      <th>Name Kategori</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -74,7 +75,12 @@
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $item->nama_jenis }}</td>
                       <td>
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputJenis" data-mode="edit" data-id="{{ $item->id }}" data-nama_jenis="{{ $item->nama_jenis }}">
+                        @foreach($item->kategori as $k)
+                        <p>{{$k->nama_kategori}}</p>
+                        @endforeach
+                      </td>
+                      <td>
+                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#formInputJenis" data-mode="edit" data-id="{{ $item->id }}" data-nama_jenis="{{ $item->nama_jenis }}" data-nama_kategori="{{ $item->nama_kategori }}">
                           <i class='fa fa-edit'></i> Edit
                         </button>
                         <form action="{{ route('jenis.destroy', $item->id) }}" method="POST" class="d-inline form-delete" style="display:inline;">
@@ -128,16 +134,19 @@
           const btn = $(e.relatedTarget)
           const mode = btn.data('mode')
           const nama_jenis = btn.data('nama_jenis')
+          const nama_kategori = btn.data('nama_kategori')
           const id = btn.data('id')
           const modal = $(this)
           if (mode === 'edit') {
             modal.find('.modal-title').text('Edit jenis')
             modal.find('#nama_jenis').val(nama_jenis)
+            modal.find('#nama_kategori').val(nama_kategori)
             modal.find('.modal-body form').attr('action', '{{ url("jenis") }}/' + id)
             modal.find('#method').html('@method("PATCH")')
           } else {
             modal.find('.modal-title').text('Input jenis')
             modal.find('#nama_jenis').val('')
+            modal.find('#nama_kategori').val('')
             modal.find('#method').html('')
             modal.find('.modal-body form').attr('action', '{{ url("jenis") }}')
           }

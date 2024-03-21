@@ -4,9 +4,9 @@
 @section('content')
 <div class="transaksi-container">
     <ul class="item content menu-container">
-        @foreach($jenis as $j)
+        @foreach($kategori as $j)
         <li>
-            <h3>{{ $j->nama_jenis}}</h3>
+            <h3>{{ $j->nama_kategori}}</h3>
             <ul class="menu-item" style="cursor: pointer;">
                 @if(isset($j->menu) && count($j->menu) > 0)
                 @foreach($j->menu as $menu)
@@ -96,10 +96,11 @@
 
         $('.ordered-list').on('click', '.remove-item', function() {
             const item = $(this).closest('li')[0];
-            let index = orderedList.findIndex(list => list.barang_id == parseInt(item.dataset.id))
+            let index = orderedList.findIndex(list => list.id == (item.dataset.id + item.dataset.jenisBarang))
             orderedList.splice(index, 1)
             $(item).remove();
             $('#total').html(sum())
+            console.log(orderedList, index)
         })
 
         $('#btn-bayar').on('click', function() {
@@ -143,32 +144,31 @@
             const harga = parseFloat(data.harga);
             const stok = parseFloat(data.stok);
             const id = parseInt(data.id);
-            console.log(jenisBarang, id)
+            if (stok == 0) {
+                return
+            }
+            // if (jenisBarang === 'menu') {
+            // Logika untuk menambahkan menu
+            if (orderedList.every(list => list.id !== id + jenisBarang)) {
+                let dataN = {
+                    'id': id + jenisBarang,
+                    'barang_id': id,
+                    'barang': jenisBarang,
+                    "menu": menu_clicked,
+                    'harga': harga,
+                    'stok': stok,
+                    "qty": 1
+                };
+                orderedList.push(dataN);
 
-            if (jenisBarang === 'menu') {
-                // Logika untuk menambahkan menu
-                if (orderedList.every(list => list.id !== id + jenisBarang)) {
-                    let dataN = {
-                        'id': id + jenisBarang,
-                        'barang_id': id,
-                        'barang': 'menu',
-                        "menu": menu_clicked,
-                        'harga': harga,
-                        'stok': stok,
-                        "qty": 1
-                    };
-                    orderedList.push(dataN);
-                    console.log(orderedList)
-
-                    let listOrder = `<li data-jenis-barang="${jenisBarang}" data-id="${id}" data-stok="${stok}"> <h3>${menu_clicked}</h3>`;
-                    listOrder += `<button class="btn-dec"> - </button>`;
-                    listOrder += `<input class="qty-item" type="number" value="1" style="3rem" readonly/>
+                let listOrder = `<li data-jenis-barang="${jenisBarang}" data-id="${id}" data-stok="${stok}"> <h3>${menu_clicked}</h3>`;
+                listOrder += `<button class="btn-dec"> - </button>`;
+                listOrder += `<input class="qty-item" type="number" value="1" style="3rem" readonly/>
                                 <button class="btn-inc">+</button><br>
                                 <button class="remove-item">Hapus</button>
                                 <span class="subtotal">${harga * 1}</span>
                                 </li>`;
-                    $(".ordered-list").append(listOrder);
-                }
+                $(".ordered-list").append(listOrder);
             }
             // } else if (jenisBarang === 'produkTitipan') {
             //     // Logika untuk menambahkan titipan
@@ -183,7 +183,6 @@
             //             "qty": 1
             //         };
             //         orderedList.push(dataN);
-            //         console.log(orderedList)
             //         let listOrder = `<li data-jenis-barang="${jenisBarang}" data-id="${id}" data-stok="${stok}"> <h3>${menu_clicked}</h3>`;
             //         listOrder += `<button class="btn-dec"> - </button>`;
             //         listOrder += `<input class="qty-item" type="number" value="1" style="3rem" readonly/>
@@ -194,6 +193,7 @@
             //         $(".ordered-list").append(listOrder);
             //     }
             // }
+            console.log(orderedList)
             $("#total").html(sum());
         });
 

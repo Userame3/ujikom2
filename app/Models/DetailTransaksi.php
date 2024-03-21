@@ -9,7 +9,7 @@ class DetailTransaksi extends Model
 {
     use HasFactory;
     // protected $table = 'detail_transaksi';
-    protected $fillable = ['id_transaksi', 'id_menu', 'jumlah', 'subtotal'];
+    protected $fillable = ['id_transaksi', 'id_menu', 'id_titipan', 'jumlah', 'subtotal'];
 
     public function transaksi()
     {
@@ -17,6 +17,10 @@ class DetailTransaksi extends Model
     }
     public function menu()
     {
-        return $this->belongsTo(Menu::class, 'id_menu');
+        return $this->belongsTo(Menu::class, 'id_menu', 'id');
+    }
+    public function titipan()
+    {
+        return $this->belongsTo(Titipan::class, 'id_titipan');
     }
 }

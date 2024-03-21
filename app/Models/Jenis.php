@@ -10,14 +10,11 @@ class Jenis extends Model
 {
     use HasFactory;
     protected $table = 'jenis';
-    protected $fillable = ['nama_jenis'];
+    protected $fillable = ['nama_jenis', 'kategori_id'];
 
-    public function menu(): HasMany
+    public function kategori(): HasMany
     {
-        return $this->hasMany(Menu::class, 'jenis_id', 'id');
+        return $this->hasMany(Kategori::class, 'jenis_id', 'id');
     }
-    public function titipan(): HasMany
-    {
-        return $this->hasMany(Titipan::class);
-    }
+    
 }
