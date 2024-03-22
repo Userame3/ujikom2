@@ -24,7 +24,7 @@ class StoreTitipanRequest extends FormRequest
     public function rules()
     {
         return [
-            'jenis_id' => 'required',
+            'kategori_id' => 'required',
             'nama_produk' => 'required',
             'nama_supplier' => 'required',
             'harga_beli' => 'required',

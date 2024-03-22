@@ -17,7 +17,7 @@
                             <select class="form-control" name="kategori_id" id="kategori_id" required>
                                 <option value="">Pilih Jenis</option>
                                 @foreach ($kategori as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama_jenis  }}</option>
+                                <option value="{{ $item->id }}">{{ $item->nama_kategori  }}</option>
                                 @endforeach
                             </select>
                         </div>

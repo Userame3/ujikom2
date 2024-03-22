@@ -42,7 +42,7 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formInputpelanggan"><i class="fa fa-plus-square"></i> Tambah pelanggan</button>
 
                                 <button class="btn btn-info" data-toggle="modal" data-target="#formInputPelanggan"><i class="fa fa-file-pdf-o"></i> Import</button>
-                                <a href="{{ route('export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
+                                <a href="{{ route('pelanggan-export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
                                 <a class="btn btn-success" href="{{route('export-pelanggan')}}"><i class="fa fa-file-excel-o"></i>Export</a>
                             </div>
                             <div class="table-responsive">

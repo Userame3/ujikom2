@@ -11,6 +11,7 @@ use Exception;
 use PDOException;
 use App\Exports\PelangganExport;
 use App\Imports\PelangganImport;
+use Dompdf\Dompdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 class PelangganController extends Controller
@@ -77,9 +78,35 @@ class PelangganController extends Controller
 
     public function importData()
     {
-        Excel::import(new PelangganImport, request()->file('import'));
+        try {
+            Excel::import(new PelangganImport, request()->file('import'));
+            return redirect()->back()->with('success', 'Import data berhasil');
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return redirect()->back()->with('error', 'Gagal mengimpor data: ' . $e->getMessage());
+        }}
 
-        return redirect(request()->segment(1) . '/pelanggan')->with('succes', 'Import data pelanggan berhasil');
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = Pelanggan::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('pelanggan.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 
     

@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form method="post" action="{{ url(request()->segment(1).'/jenis/import')}}" enctype="multipart/form-data">
+                <form method="post" action="{{ url(request()->segment(1).'/import')}}" enctype="multipart/form-data">
                     @csrf
                     <div id="method"></div>
                     <div class="form-group row">

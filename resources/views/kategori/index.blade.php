@@ -43,7 +43,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formInputkategori"><i class="fa fa-plus-square"></i> Tambah kategori</button>
 
                 <button class="btn btn-info" data-toggle="modal" data-target="#formKategori"><i class="fa fa-file-pdf-o"></i> Import</button>
-                <a href="{{ route('export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
+                <a href="{{ route('kategori-export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
                 <a class="btn btn-success" href="{{route('export-kategori')}}"><i class="fa fa-file-excel-o"></i>Export</a>
               </div>
               <div class="table-responsive">

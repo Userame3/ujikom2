@@ -11,19 +11,7 @@
     <div class="x_panel">
       <div class="x_title">
         <h1>Jenis </h1>
-        <!-- <ul class="nav navbar-right panel_toolbox">
-                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Settings 1</a>
-                            <a class="dropdown-item" href="#">Settings 2</a>
-                        </div>
-                    </li>
-                    <li><a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul> -->
+       
         <div class="clearfix"></div>
       </div>
       <div class="x_content">
@@ -31,11 +19,6 @@
           <div class="col-sm-12">
             <div class="card-box table-responsive">
 
-              <!-- <div class="alert alert-success alert-dismissible " role="alert">
-          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span>
-          </button>
-          <strong>Berhasil!</strong>
-        </div> -->
 
               @if (session('success'))
               <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -56,7 +39,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formInputJenis"><i class="fa fa-plus-square"></i> Tambah Jenis</button>
 
                 <button class="btn btn-info" data-toggle="modal" data-target="#formjenis"><i class="fa fa-file-pdf-o"></i> Import</button>
-                <a href="{{ route('export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
+                <a href="{{ route('jenis-export-pdf') }}" class="btn btn-primary"><i class="fa fa-file-pdf-o"></i>Export PDF</a>
                 <a class="btn btn-success" href="{{route('export-jenis')}}"><i class="fa fa-file-excel-o"></i>Export</a>
               </div>
               <div class="table-responsive">

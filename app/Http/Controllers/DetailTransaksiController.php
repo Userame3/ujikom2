@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDetailTransaksiRequest;
 use App\Models\Jenis;
 use App\Models\Transaksi;
 use App\Exports\DetailTransaksiExport;
+use Dompdf\Dompdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 class DetailTransaksiController extends Controller
@@ -93,5 +94,28 @@ class DetailTransaksiController extends Controller
     {
         $date = date('Y-m-d');
         return Excel::download(new DetailTransaksiExport, $date . '_transaksi.xlsx');
+    }
+
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = DetailTransaksi::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('det_transaksi.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 }

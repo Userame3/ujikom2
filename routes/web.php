@@ -63,9 +63,11 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('export/jenis', [JenisController::class, 'exportData'])->name('export-jenis');
     Route::post('jenis/import', [JenisController::class, 'importData'])->name('import-jenis');
+    Route::get('export-pdf/jenis', [JenisController::class, 'exportPDF'])->name('jenis-export-pdf');
 
     Route::get('export/pelanggan', [PelangganController::class, 'exportData'])->name('export-pelanggan');
     Route::post('pelanggan/import', [PelangganController::class, 'importData'])->name('import-pelanggan');
+    Route::get('export-pdf/pelanggan', [PelangganController::class, 'exportPDF'])->name('pelanggan-export-pdf');
 
     Route::get('export/titipan', [TitipanController::class, 'exportData'])->name('export-titipan');
     Route::post('titipan/import', [TitipanController::class, 'importData'])->name('import-titipan');
@@ -73,8 +75,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('export/kategori', [KategoriController::class, 'exportData'])->name('export-kategori');
     Route::post('kategori/import', [KategoriController::class, 'importData'])->name('import-kategori');
+    Route::get('export-pdf/kategori', [KategoriController::class, 'exportPDF'])->name('kategori-export-pdf');
 
     Route::get('export/detailTransaksi', [DetailTransaksiController::class, 'exportData'])->name('export-detail_transaksi');
+    Route::get('export-pdf/detailTransaksi', [DetailTransaksiController::class, 'exportPDF'])->name('detailTransaksi-export-pdf');
 });
 
 // Route::group(['middleware' => ['cekUserLogin:admin']], function () {

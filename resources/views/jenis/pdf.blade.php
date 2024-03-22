@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Menu</title>
+    <title>Jenis</title>
     <style>
         /* Gaya CSS untuk PDF */
         table {
@@ -29,24 +29,16 @@
         <thead>
             <tr>
                 <th>No</th>
+                <th>Nama kategori</th>
                 <th>Jenis</th>
-                <th>Nama Menu</th>
-                <th>Harga</th>
-                <th>Stok</th>
-                <th>Gambar</th>
-                <th>Deskripsi</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
+                <td>{{ $item->nama_kategori }}</td>
                 <td>{{ $item->jenis->nama_jenis }}</td>
-                <td>{{ $item->nama_menu }}</td>
-                <td>{{ $item->harga }}</td>
-                <td>{{ $item->stok }}</td>
-                <td><img src="{{ asset('storage/menu-image/' . $item->image) }}" alt="{{ $item->nama_menu }}" style="max-width: 100px;"></td>
-                <td>{{ $item->deskripsi }}</td>
             </tr>
             @endforeach
         </tbody>

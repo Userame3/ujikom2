@@ -11,6 +11,7 @@ use Exception;
 use PDOException;
 use App\Exports\JenisExport;
 use App\Imports\JenisImport;
+use Dompdf\Dompdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -78,8 +79,35 @@ class JenisController extends Controller
 
     public function importData()
     {
-        Excel::import(new JenisImport, request()->file('import'));
+        try {
+            Excel::import(new JenisImport, request()->file('import'));
+            return redirect()->back()->with('success', 'Import data menu berhasil');
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return redirect()->back()->with('error', 'Gagal mengimpor data Jenis: ' . $e->getMessage());
+        }
+    }
 
-        return redirect(request()->segment(1) . '/jenis')->with('succes', 'Import data Jenis berhasil');
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = Jenis::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('jenis.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 }

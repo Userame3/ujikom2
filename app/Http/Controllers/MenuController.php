@@ -138,19 +138,10 @@ class MenuController extends Controller
     public function importData()
     {
         try {
-            $data = Excel::toArray(new MenuImport, request()->file('import'));
-            foreach ($data as $d) {
-                Menu::create([
-                    'kategori_id' => $d[0]['jenis_id'],
-                    'nama_menu' => $d[0]['menu'],
-                    'harga' => $d[0]['harga'],
-                    'stok' => $d[0]['stok'],
-                    'image' => $d[0]['image'],
-                    'deskripsi' => $d[0]['deskripsi']
-                ]);
-            }
+            Excel::import(new MenuImport, request()->file('import'));
             return redirect()->back()->with('success', 'Import data menu berhasil');
         } catch (Exception $e) {
+            return $e->getMessage();
             return redirect()->back()->with('error', 'Gagal mengimpor data menu: ' . $e->getMessage());
         }
     }

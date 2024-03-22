@@ -9,7 +9,7 @@ class Titipan extends Model
 {
     use HasFactory;
     protected $table ='titipans';
-    protected $fillable = ['jenis_id', 'nama_produk', 'nama_supplier', 'harga_beli','harga_jual', 'stok'];
+    protected $fillable = ['kategori_id', 'nama_produk', 'nama_supplier', 'harga_beli','harga_jual', 'stok'];
 
     public function jenis()
     {

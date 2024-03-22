@@ -12,6 +12,7 @@ use PDOException;
 use App\Exports\KategoriExport;
 use App\Imports\KategoriImport;
 use App\Models\Jenis;
+use Dompdf\Dompdf;
 use Maatwebsite\Excel\Facades\Excel;
 
 
@@ -57,10 +58,10 @@ class KategoriController extends Controller
 
     public function update(StoreKategoriRequest $request, Kategori $kategori)
     {
-        $data['kategori_id'] = $request->kategori_id;
         try {
             DB::beginTransaction();
             $kategori->update($request->all());
+            DB::commit();
             return redirect('kategori')->with('success', 'Kategori berhasil diupdate!');
         } catch (QueryException | Exception | PDOException $error) {
             DB::rollBack();
@@ -89,8 +90,35 @@ class KategoriController extends Controller
 
     public function importData()
     {
-        Excel::import(new kategoriImport, request()->file('import'));
+        try {
+            Excel::import(new KategoriImport, request()->file('import'));
+            return redirect()->back()->with('success', 'Import data berhasil');
+        } catch (Exception $e) {
+            return $e->getMessage();
+            return redirect()->back()->with('error', 'Gagal mengimpor data : ' . $e->getMessage());
+        }
+    }
 
-        return redirect(request()->segment(1) . '/Kategori')->with('succes', 'Import data Kategori berhasil');
+    public function exportPDF()
+    {
+        // Ambil data yang akan diekspor (contoh: dari database)
+        $data = Kategori::all();
+
+        // Render data ke dalam tampilan HTML
+        $html = view('kategori.pdf', compact('data'))->render();
+        // Inisialisasi Dompdf
+        $dompdf = new Dompdf();
+
+        // Load HTML ke Dompdf
+        $dompdf->loadHtml($html);
+
+        // Set ukuran dan orientasi halaman
+        $dompdf->setPaper('A4', 'potrait');
+
+        // Render HTML menjadi PDF
+        $dompdf->render();
+
+        // Simpan atau kirimkan PDF ke browser
+        return $dompdf->stream('laporan.pdf');
     }
 }
