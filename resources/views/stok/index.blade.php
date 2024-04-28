@@ -4,13 +4,13 @@
 @endpush
 
 @section('content')
-    @include('jenis.modal')
+    @include('stok.modal')
 
     <div class="row">
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h1>Jenis </h1>
+                    <h1>Stok</h1>
 
                     <div class="clearfix"></div>
                 </div>
@@ -36,15 +36,11 @@
                                 @endif
 
                                 <div class="x_content">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#formInputJenis"><i class="fa fa-plus-square"></i> Tambah
-                                        Jenis</button>
-
-                                    <button class="btn btn-info" data-toggle="modal" data-target="#formjenis"><i
+                                    <button class="btn btn-info" data-toggle="modal" data-target="#formstok"><i
                                             class="fa fa-file-pdf-o"></i> Import</button>
-                                    <a href="{{ route('jenis-export-pdf') }}" class="btn btn-primary"><i
+                                    <a href="{{ route('stok-export-pdf') }}" class="btn btn-primary"><i
                                             class="fa fa-file-pdf-o"></i>Export PDF</a>
-                                    <a class="btn btn-success" href="{{ route('export-jenis') }}"><i
+                                    <a class="btn btn-success" href="{{ route('export-stok') }}"><i
                                             class="fa fa-file-excel-o"></i>Export</a>
                                 </div>
                                 <div class="table-responsive">
@@ -52,31 +48,33 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Name Jenis</th>
+                                                <th>Menu Id</th>
+                                                <th>Jumlah</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($jenis as $item)
+                                            @foreach ($stok as $item)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->nama_jenis }}</td>
+                                                    <td>{{ $item->menu->nama_menu ?? '-' }}</td>
+                                                    <td>{{ $item->jumlah }}</td>
                                                     <td>
                                                         <button type="button" class="btn btn-warning" data-toggle="modal"
-                                                            data-target="#formInputJenis" data-mode="edit"
+                                                            data-target="#formInputStok" data-mode="edit"
                                                             data-id="{{ $item->id }}"
-                                                            data-nama_jenis="{{ $item->nama_jenis }}"
-                                                            data-nama_kategori="{{ $item->nama_kategori }}">
+                                                            data-menu_id="{{ $item->menu_id }}"
+                                                            data-jumlah="{{ $item->jumlah }}">
                                                             <i class='fa fa-edit'></i> Edit
                                                         </button>
-                                                        <form action="{{ route('jenis.destroy', $item->id) }}"
+                                                        <form action="{{ route('stok.destroy', $item->id) }}"
                                                             method="POST" class="d-inline form-delete"
                                                             style="display:inline;">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="button" class="btn btn-danger delete-data"
                                                                 data-id="{{ $item->id }}"
-                                                                data-nama_jenis="{{ $item->nama_jenis }}">
+                                                                data-menu_id="{{ $item->menu_id }}">
                                                                 <i class='fa fa-trash'></i> Delete
                                                             </button>
                                                         </form>
@@ -91,19 +89,19 @@
                     </div>
                 </div>
             @endsection
-            @include('jenis.data')
+            @include('stok.data')
             @push('script')
                 <script>
-                    console.log('jenis')
+                    console.log('stok')
                     $('.alert-success').fadeTo(2000, 500).slideUp(500, function() {
                         $('.alert-success').slideUp(500)
                     })
 
                     $('.delete-data').on('click', function(e) {
                         e.preventDefault()
-                        let nama_jenis = $(this).closest('tr').find('td:eq(1)').text()
+                        let menu_id = $(this).closest('tr').find('td:eq(1)').text()
                         Swal.fire({
-                            title: `Apakah data ${nama_jenis} akan dihapus ?`,
+                            title: `Apakah data ${menu_id} akan dihapus ?`,
                             text: 'Data tidak bisa dikembalikan!',
                             icon: 'error',
                             showCancelButton: true,
@@ -118,27 +116,23 @@
                             }
                         })
                     })
-
-                    $('#formInputJenis').on('show.bs.modal', function(e) {
+                    $('#formInputStok').on('show.bs.modal', function(e) {
                         console.log('modal')
                         const btn = $(e.relatedTarget)
                         const mode = btn.data('mode')
-                        const nama_jenis = btn.data('nama_jenis')
-                        const nama_kategori = btn.data('nama_kategori')
+                        const jumlah = btn.data('jumlah')
                         const id = btn.data('id')
                         const modal = $(this)
                         if (mode === 'edit') {
-                            modal.find('.modal-title').text('Edit jenis')
-                            modal.find('#nama_jenis').val(nama_jenis)
-                            modal.find('#nama_kategori').val(nama_kategori)
-                            modal.find('.modal-body form').attr('action', '{{ url('jenis') }}/' + id)
+                            modal.find('.modal-title').text('Edit stok')
+                            modal.find('#jumlah').val(jumlah)
+                            modal.find('.modal-body form').attr('action', '{{ url('stok') }}/' + id)
                             modal.find('#method').html('@method('PATCH')')
                         } else {
-                            modal.find('.modal-title').text('Input jenis')
-                            modal.find('#nama_jenis').val('')
-                            modal.find('#nama_kategori').val('')
+                            modal.find('.modal-title').text('Input stok')
+                            modal.find('#jumlah').val('')
                             modal.find('#method').html('')
-                            modal.find('.modal-body form').attr('action', '{{ url('jenis') }}')
+                            modal.find('.modal-body form').attr('action', '{{ url('stok') }}')
                         }
                     })
                 </script>

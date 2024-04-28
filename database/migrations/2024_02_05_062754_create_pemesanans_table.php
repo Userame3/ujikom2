@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pemesanans', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('menu_id')->References('id')->on('menus')->cascadeOnDelete();
+            $table->foreignId('menu_id')->References('id')->on('menu')->cascadeOnDelete();
             $table->date('tanggal_pemesanan');
             $table->time('jam_mulai');
             $table->time('jam_selesai');

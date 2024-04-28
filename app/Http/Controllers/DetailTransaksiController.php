@@ -21,6 +21,7 @@ class DetailTransaksiController extends Controller
     public function index()
     {
         $data['transaksi'] = Transaksi::with(['detailTransaksi'])->get();
+        $data['jenis'] = Jenis::get();
         return view('det_transaksi.index')->with($data);
     }
 

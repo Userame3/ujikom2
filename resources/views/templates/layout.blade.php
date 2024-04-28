@@ -20,7 +20,8 @@
     <link href="{{ asset('assets') }}/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
     <!-- bootstrap-progressbar -->
-    <link href="{{ asset('assets') }}/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <link href="{{ asset('assets') }}/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css"
+        rel="stylesheet">
     <!-- JQVMap -->
     <link href="{{ asset('assets') }}/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
     <!-- bootstrap-daterangepicker -->
@@ -28,8 +29,8 @@
 
     <link rel="stylesheet" href="{{ asset('sweetalert') }}/dist/sweetalert2.min.css">
 
-    <link rel="stylesheet" href="{{ asset('css')}}/style.css">
-    <link rel="stylesheet" href="{{ asset('css')}}/sweet-alert4-bootstrap4.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/style.css">
+    <link rel="stylesheet" href="{{ asset('css') }}/sweet-alert4-bootstrap4.css">
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets') }}/build/css/custom.min.css" rel="stylesheet">
 
@@ -51,11 +52,12 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="{{asset('assets')}}\propic.png" alt="{{ asset('assets') }}." class="img-circle profile_img">
+                            <img src="{{ asset('assets') }}\download.png" alt="{{ asset('assets') }}."
+                                class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome</span>
-                            <h2>{{Auth::user()->name}}</h2>
+                            <h2>{{ Auth::user()->name }}</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -67,50 +69,65 @@
                         <div class="menu_section">
                             <h3>Caffe</h3>
                             <ul class="nav side-menu">
-                                <li><a href="{{ url('/')}}" class="nav-link"><i class="fa fa-home"></i> Home </a>
-                                <li><a href="{{url ('/jenis') }}" class="nav-link"><i class="fa fa-archive"></i> Jenis </a>
-                                <li><a href="{{ url('/kategori')}}" class="nav-link"><i class="fa fa-list"></i> Kategori </a>
-                                <li><a href="{{url ('/menu') }}"><i class="fa fa-list-ul"></i> Menu </a>
-                                <li><a href="{{url ('/pelanggan') }}"><i class="fa fa-users"></i> Pelanggan </a>
-                                <li><a href="{{url ('/stok') }}" class="nav-link"><i class="fa fa-archive"></i> Stok </a>
-                                <li><a href="{{url ('/meja') }}"><i class="fa fa-spinner"></i> Meja </a>
-                                <ul class="nav child_menu">
-                                    <!-- <li><a href="{{ url('/jenis') }}">jenis</a></li>
+                                <li><a href="{{ url('/') }}" class="nav-link"><i class="fa fa-home"></i> Home </a>
+                                    @if (Auth::user()->role == 'admin')
+                                <li><a href="{{ url('/jenis') }}" class="nav-link"><i class="fa fa-archive"></i> Jenis
+                                    </a>
+                                <li><a href="{{ url('/menu') }}"><i class="fa fa-list-ul"></i> Menu </a>
+                                <li><a href="{{ url('/pelanggan') }}"><i class="fa fa-users"></i> Pelanggan </a>
+                                <li><a href="{{ url('/stok') }}" class="nav-link"><i class="fa fa-archive"></i> Stok
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <!-- <li><a href="{{ url('/jenis') }}">jenis</a></li>
                                     <li><a href="{{ url('/menu') }}">Menu</a></li> -->
-                                </ul>
-                            </li>
-                            <li><a>Produk Titipan<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{url ('/titipan') }}"><i class="fa fa-list-ul"></i> Produk Titipan </a>
-                                    </li>
-                                    <li><a href="{{url ('/history_titipan') }}"><i class="fa fa-list-alt"></i> History Titipan</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                
-                
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                        <div class="menu_section">
-                            <h3>Transaksi</h3>
-                            <ul class="nav side-menu">
-                                <li><a href="{{url ('/pemesanan') }}"><i class="fa fa-credit-card"></i> Pemesanan </a>
-                                <li><a href="{{url ('/transaksi') }}"><i class="fa fa-money"></i> Transaksi </a>
-                                <li><a href="{{url ('/det_transaksi') }}"><i class="fa fa-list-alt"></i> History Transaksi </a>
-                                <li><a href="{{ url ('tentang-aplikasi') }}">Tentang Aplikasi</a></li>
-                                <ul class="nav child_menu">
-
-                                    <!-- <li><a href="{{ url('/jenis') }}">jenis</a></li>
-                                        <li><a href="{{ url('/menu') }}">Menu</a></li> -->
-                                </ul>
+                                    </ul>
                                 </li>
+                                {{-- <li><a>Produk Titipan<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{{ url('/titipan') }}"><i class="fa fa-list-ul"></i> Produk
+                                                Titipan </a>
+                                        </li>
+                                        <li><a href="{{ url('/history_titipan') }}"><i class="fa fa-list-alt"></i>
+                                                History Titipan</a>
+                                        </li>
+                                    </ul>
+                                </li> --}}
+                                {{-- <li><a>Absensi Kerja<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{{ url('/absensi') }}"><i class="fa fa-list-ul"></i> Absensi Kerja
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li> --}}
+                                @endif
                             </ul>
                         </div>
                     </div>
+
+
+                    @if (Auth::user()->role == 'kasir')
+                        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                            <div class="menu_section">
+                                <h3>Transaksi</h3>
+                                <ul class="nav side-menu">
+                                    {{-- <li><a href="{{ url('/pemesanan') }}"><i class="fa fa-credit-card"></i> Pemesanan
+                                        </a> --}}
+                                    <li><a href="{{ url('/transaksi') }}"><i class="fa fa-money"></i> Transaksi </a>
+                                    <li><a href="{{ url('/det_transaksi') }}"><i class="fa fa-list-alt"></i> History
+                                            Transaksi </a>
+                                    <li><a href="{{ url('tentang-aplikasi') }}">Tentang Aplikasi</a></li>
+                                    <ul class="nav child_menu">
+
+                                        <!-- <li><a href="{{ url('/jenis') }}">jenis</a></li>
+                                        <li><a href="{{ url('/menu') }}">Menu</a></li> -->
+                                    </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                 </div>
+                @endif
+
                 <!-- /sidebar menu -->
 
                 <!-- /menu footer buttons -->
@@ -125,7 +142,7 @@
                     <a data-toggle="tooltip" data-placement="top" title="Lock">
                         <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                     </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ route('logout')}}">
+                    <a data-toggle="tooltip" data-placement="top" title="Logout" href="{{ route('logout') }}">
                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </div>
@@ -142,8 +159,10 @@
                 <nav class="nav navbar-nav">
                     <ul class=" navbar-right">
                         <li class="nav-item dropdown open" style="padding-left: 15px;">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true" id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
-                                <img src="{{asset('assets')}}\propic.png" alt="{{ asset('assets') }}.">{{Auth::user()->name}}
+                            <a href="javascript:;" class="user-profile dropdown-toggle" aria-haspopup="true"
+                                id="navbarDropdown" data-toggle="dropdown" aria-expanded="false">
+                                <img src="{{ asset('assets') }}\propic.png"
+                                    alt="{{ asset('assets') }}.">{{ Auth::user()->name }}
                             </a>
                             <div class=" dropdown-menu dropdown-usermenu pull-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="javascript:;"> Profile</a>
@@ -152,7 +171,8 @@
                                     <span>Settings</span>
                                 </a>
                                 <a class="dropdown-item" href="javascript:;">Help</a>
-                                <a class="dropdown-item" href="{{ route('logout')}}"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"><i
+                                        class="fa fa-sign-out pull-right"></i> Log Out</a>
                             </div>
                         </li>
                     </ul>
@@ -171,8 +191,8 @@
             <!-- /top tiles -->
 
             <br />
-            @yield('content')
 
+            @yield('content')
 
         </div>
         <!-- /page content -->

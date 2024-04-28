@@ -1,4 +1,5 @@
-<div class="modal fade" id="formInputmenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="formInputmenu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -14,12 +15,12 @@
                     <input type="hidden" name="old_image" id="old_image">
 
                     <div class="form-group row">
-                        <label for="kategori_id" class="col-sm-4 col-form-label">Kategori</label>
+                        <label for="kategori_id" class="col-sm-4 col-form-label">Jenis</label>
                         <div class="col-sm-8">
                             <select class="form-control" name="kategori_id" id="kategori_id" required>
-                                <option value="">Pilih Kategori</option>
-                                @foreach ($kategori as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama_kategori  }}</option>
+                                <option value="">Pilih Jenis</option>
+                                @foreach ($jenis as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nama_jenis }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -44,14 +45,15 @@
                     <div class="form-group row">
                         <label for="nama_menu" class="col-sm-4 col-form-label">Stok</label>
                         <div class="col-sm-8">
-                            <input type="double" class="form-control" name="stok" id="stok">
+                            <input type="double" class="form-control" name="jumlah" id="jumlah">
                         </div>
                     </div>
 
 
                     <img class="img-preview img-fluid" style="max-height: 200px">
                     <div class="input-group input-group-outline my-3">
-                        <input type="file" name="image" id="image" class="form-control" onchange="previewImage()">
+                        <input type="file" name="images" id="images" class="form-control"
+                            onchange="previewImage()">
                     </div>
 
                     <!-- <div class="btn-group">

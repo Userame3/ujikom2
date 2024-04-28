@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Menu</title>
+    <title>Laporan PDF</title>
     <style>
         /* Gaya CSS untuk PDF */
         table {
@@ -24,22 +24,28 @@
 </head>
 
 <body>
-    <h1>Daftar Menu</h1>
+    <h1>Laporan PDF</h1>
     <table>
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama Kategori</th>
-                <th>Jenis</th>
+                <th>Nama Karyawan</th>
+                <th>Tanggal Masuk</th>
+                <th>Waktu Masuk</th>
+                <th>Status</th>
+                <th>Waktu Keluar</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->nama_kategori }}</td>
-                <td>{{ $item->jenis->nama_jenis }}</td>
-            </tr>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->namaKaryawan }}</td>
+                    <td>{{ $item->tanggalMasuk }}</td>
+                    <td>{{ $item->waktuMasuk }}</td>
+                    <td>{{ $item->status }}</td>
+                    <td>{{ $item->waktuKeluar }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

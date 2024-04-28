@@ -12,9 +12,8 @@ class Jenis extends Model
     protected $table = 'jenis';
     protected $fillable = ['nama_jenis', 'kategori_id'];
 
-    public function kategori(): HasMany
+    public function menu(): HasMany
     {
-        return $this->hasMany(Kategori::class, 'jenis_id', 'id');
+        return $this->hasMany(Menu::class, 'kategori_id', 'id');
     }
-    
 }

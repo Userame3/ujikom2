@@ -15,6 +15,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\MenuExport;
 use App\Imports\MenuImport;
 use App\Models\Kategori;
+use App\Models\Stok;
 use App\Models\Titipan;
 use Dompdf\Dompdf;
 
@@ -28,15 +29,18 @@ class MenuController extends Controller
     public function index()
     {
         try {
-            $data['menu'] = DB::table('menus')
-                ->join('kategoris', 'menus.kategori_id', '=', 'kategoris.id')
-                ->select('menus.*', 'kategoris.nama_kategori', 'kategoris.id as idKategori')->orderBy('created_at', 'DESC')->get();;
-            $kategori = Kategori::get();
+            $data['menu'] = Menu::all();
+            // $data['menu'] = DB::table('menus')
+            //     ->join('kategoris', 'menus.kategori_id', '=', 'kategoris.id')
+            //     ->join('stoks', 'menus.stok_id', '=', 'stoks.id')
+            //     ->select('menus.*', 'kategoris.nama_kategori', 'kategoris.id as idKategori', 'stoks.jumlah as stok')->orderBy('created_at', 'DESC')->get();
+            $jenis = Jenis::get();
             return view('Menu.index', [
                 'page' => 'menu',
                 'section' => 'Kelola data',
-            ], compact('kategori'))->with($data);
+            ], compact('jenis'))->with($data);
         } catch (QueryException | Exception | PDOException $error) {
+            return $error->getMessage();
             $this->failResponse($error->getCode());
         }
 
@@ -51,19 +55,21 @@ class MenuController extends Controller
 
     public function store(StoreMenuRequest $request)
     {
-        $image = $request->file('image');
-        $filename = date('Y-m-d') . $image->getClientOriginalName();
-        $path = 'menu-image/' . $filename;
-        Storage::disk('public')->put($path, file_get_contents($image));
+        $images = $request->file('images');
+        $filename = date('Y-m-d') . $images->getClientOriginalName();
+        $path = 'menu-images/' . $filename;
+        Storage::disk('public')->put($path, file_get_contents($images));
+
+        $stok = Stok::create(['jumlah' => 0]);
 
         $data['kategori_id'] = $request->kategori_id;
         $data['nama_menu'] = $request->nama_menu;
         $data['harga'] = $request->harga;
-        $data['stok'] = $request->stok;
-        $data['image'] = $filename;
+        $data['images'] = $filename;
         $data['deskripsi'] = $request->deskripsi;
+        $data['stok_id'] = $stok->id;
+        $menu = Menu::create($data);
 
-        Menu::create($data);
         return redirect('menu')->with('succes', 'data menu berhasil ditambahkan');
 
 
@@ -80,26 +86,34 @@ class MenuController extends Controller
 
     public function update(StoreMenuRequest $request, menu $menu)
     {
-        if ($request->file('image')) {
+        if ($request->file('images')) {
             if ($request->old_image) {
-                Storage::disk('public')->delete('menu-image/' . $request->old_image);
+                Storage::disk('public')->delete('menu-images/' . $request->old_image);
             }
 
-            $image = $request->file('image');
-            $filename = date('Y-m-d') . $image->getClientOriginalName();
-            $path = 'menu-image/' . $filename;
+            $images = $request->file('images');
+            $filename = date('Y-m-d') . $images->getClientOriginalName();
+            $path = 'menu-images/' . $filename;
 
-            Storage::disk('public')->put($path, file_get_contents($image));
+            Storage::disk('public')->put($path, file_get_contents($images));
 
-            $data['image'] = $filename;
+            $data['images'] = $filename;
         } else {
-            $data['image'] = $menu->image;
+            $data['images'] = $menu->images;
         }
 
         $data['kategori_id'] = $request->kategori_id;
         $data['nama_menu'] = $request->nama_menu;
         $data['harga'] = $request->harga;
-        $data['stok'] = $request->stok;
+        $stok = Stok::find($menu->stok_id);
+        if ($stok) {
+            $stok->jumlah = $request->stok ?? 0;
+            $stok->save();
+        } else {
+            $newStok = Stok::create(['jumlah' => $request->stok ?? 0]);
+            $menu->stok_id = $newStok->id;
+            $menu->save();
+        }
         $data['deskripsi'] = $request->deskripsi;
 
         $menu->update($data);

@@ -9,6 +9,7 @@ use App\Models\DetailTransaksi;
 use App\Models\Jenis;
 use App\Models\Kategori;
 use App\Models\Menu;
+use App\Models\Stok;
 use App\Models\Titipan;
 
 use Exception;
@@ -25,7 +26,8 @@ class TransaksiController extends Controller
      */
     public function index()
     {
-        $data['kategori'] = Kategori::with(['menu'])->get();
+        $data['jenis'] = Jenis::with(['menu'])->get();
+        $data['stok'] = Stok::get();
         return view('transaksi.index')->with($data);
     }
 
@@ -73,8 +75,8 @@ class TransaksiController extends Controller
                 ];
                 if ($detail['barang'] == 'menu') {
                     $menu = Menu::find($detail['barang_id']);
-                    $menu->stok = $menu->stok - $detail['qty'];
-                    $menu->save();
+                    $menu->stok->jumlah = $menu->stok->jumlah - $detail['qty'];
+                    $menu->stok->save();
 
                     $data['id_menu'] = $detail['barang_id'];
                 } else {

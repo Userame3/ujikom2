@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreMenuRequest extends FormRequest
+class UpdateAbsensiRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,7 @@ class StoreMenuRequest extends FormRequest
     public function rules()
     {
         return [
-            'kategori_id' => 'required',
-            'nama_menu' => 'required',
-            'harga' => 'required',
-            'image' => 'nullable|mimes:png,jpg,jpeg|max:2048',
-            'deskripsi' => 'required'
+            //
         ];
     }
 }

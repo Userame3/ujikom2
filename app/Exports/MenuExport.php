@@ -26,10 +26,10 @@ class MenuExport implements FromCollection, WithHeadings, WithEvents
     {
         return [
             'No.',
-            'Jenis Id',
+            'Kategori Id',
+            'Stok Id',
             'Menu',
             'Harga',
-            'Stok',
             'Image',
             'Deskripsi',
             'Tanggal input',

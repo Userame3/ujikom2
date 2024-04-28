@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('stoks', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('menu_id')->References('id')->on('menus')->cascadeOnDelete();
-            $table->double('jumlah');
-            $table->timestamps();
+        Schema::table('menu', function (Blueprint $table) {
+            $table->string('image')->after('stok_id')->nullable();
         });
     }
 
@@ -28,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('stoks');
+        Schema::table('menu', function (Blueprint $table) {
+            $table->dropColumn('image');
+        });
     }
 };

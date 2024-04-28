@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,14 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('menu', function (Blueprint $table) {
+        Schema::create('absensi', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id')->references('id')->on('kategoris')->cascadeOnDelete();
-            $table->foreignId('stok_id')->nullable()->references('id')->on('stok')->cascadeOnDelete();
-            $table->string('nama_menu');
-            $table->double('harga');
-            $table->string('images');
-            $table->text('deskripsi');
+            $table->string('namaKaryawan');
+            $table->date('tanggalMasuk');
+            $table->time('waktuMasuk');
+            $table->enum('status', ['Masuk', 'Sakit', 'Cuti'])->default('Masuk');
+            $table->time('waktuKeluar')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('absensis');
     }
 };
