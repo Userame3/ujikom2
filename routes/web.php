@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DataController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\TitipanController;
@@ -106,6 +107,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('meja/import', [MejaController::class, 'importData'])->name('meja-import');
 
     Route::post('update-status', [AbsensiController::class, 'updateStatus']);
+
+    //Data Controller
+    Route::get('/', [DataController::class, 'index']);
 });
 
 // Route::group(['middleware' => ['cekUserLogin:admin']], function () {
