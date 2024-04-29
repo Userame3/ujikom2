@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Pelanggan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +15,13 @@ class PelangganFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
-            //
+            'nama' => fake()->name('male' | 'female'),
+            'email' => fake()->email(),
+            'no_telp' => fake()->phoneNumber(),
+            'alamat' => fake()->address(),
         ];
     }
 }
