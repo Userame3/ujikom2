@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Data Controller
     Route::get('/', [DataController::class, 'index']);
+    Route::get('data_penjualan/{lastCount}', [DataController
+    ::class, 'data_penjualan']);
 });
 
 // Route::group(['middleware' => ['cekUserLogin:admin']], function () {

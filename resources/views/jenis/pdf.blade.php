@@ -29,17 +29,15 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Nama kategori</th>
-                <th>Jenis</th>
+                <th>Nama Jenis</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($data as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->nama_kategori }}</td>
-                <td>{{ $item->jenis->nama_jenis }}</td>
-            </tr>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->nama_jenis }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

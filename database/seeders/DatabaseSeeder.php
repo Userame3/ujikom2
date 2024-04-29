@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Jenis;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +16,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $makanan = Jenis::create([
+            'nama_jenis' => 'Minuman'
+        ]);
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $minuman = Jenis::create([
+            'nama_jenis' => 'Makanan'
+        ]);
+        $minuman = Jenis::create([
+            'nama_jenis' => 'Camilan'
+        ]);
+        $this->call(MenuSeeder::class);
+        $this->call(TransaksiSeeder::class);
+        $this->call(DetailTransaksiSeeder::class);
     }
 }

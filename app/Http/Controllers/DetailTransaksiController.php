@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateDetailTransaksiRequest;
 use App\Models\Jenis;
 use App\Models\Transaksi;
 use App\Exports\DetailTransaksiExport;
+use App\Models\Menu;
 use Dompdf\Dompdf;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -16,12 +17,13 @@ class DetailTransaksiController extends Controller
     /**
      * Display a listing of the resource.
      *
-    //  * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
         $data['transaksi'] = Transaksi::with(['detailTransaksi'])->get();
         $data['jenis'] = Jenis::get();
+        $data['menu'] = Menu::get();
         return view('det_transaksi.index')->with($data);
     }
 

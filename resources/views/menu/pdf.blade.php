@@ -39,15 +39,16 @@
         </thead>
         <tbody>
             @foreach ($data as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->kategori->nama_kategori }}</td>
-                <td>{{ $item->nama_menu }}</td>
-                <td>{{ $item->harga }}</td>
-                <td>{{ $item->stok }}</td>
-                <td><img src="{{ asset('storage/menu-image/' . $item->image) }}" alt="{{ $item->nama_menu }}" style="max-width: 100px;"></td>
-                <td>{{ $item->deskripsi }}</td>
-            </tr>
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $item->jenis->nama_jenis }}</td>
+                    <td>{{ $item->nama_menu }}</td>
+                    <td>{{ $item->harga }}</td>
+                    <td>{{ $item->stok->jumlah }}</td>
+                    <td><img src="{{ asset('storage/menu-image/' . $item->image) }}" alt="{{ $item->nama_menu }}"
+                            style="max-width: 100px;"></td>
+                    <td>{{ $item->deskripsi }}</td>
+                </tr>
             @endforeach
         </tbody>
     </table>

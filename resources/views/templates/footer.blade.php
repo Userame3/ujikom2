@@ -2,7 +2,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- jQuery -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-<script src="{{ asset('js')}}/jquery-3.7.1.min.js" type="text/javascript"></script>
+<script src="{{ asset('js') }}/jquery-3.7.1.min.js" type="text/javascript"></script>
 <script src="{{ asset('assets') }}/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('assets') }}/vendors/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -48,8 +48,9 @@
 
 
 <script src="{{ asset('assets') }}/vendors/datatables.net/js/jquery.dataTables.js" crossorigin="anonymous"></script>
-<script src="{{ asset('assets') }}/vendors/datatables.net/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-
+<script src="{{ asset('assets') }}/vendors/datatables.net/js/jquery.dataTables.min.js" crossorigin="anonymous">
+</script>
+<script src="{{ asset('js') }}/canvasjs.min.js"></script>
 
 @stack('script')
 </body>

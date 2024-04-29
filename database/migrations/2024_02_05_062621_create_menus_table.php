@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('menu', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('kategori_id')->references('id')->on('kategoris')->cascadeOnDelete();
+            $table->foreignId('kategori_id')->references('id')->on('jenis')->cascadeOnDelete();
             $table->foreignId('stok_id')->nullable()->references('id')->on('stok')->cascadeOnDelete();
             $table->string('nama_menu');
             $table->double('harga');

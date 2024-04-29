@@ -50,10 +50,12 @@
                                                     <td>{{ $item->id }}</td>
                                                     <td>
                                                         @foreach ($item->detailTransaksi as $detail)
-                                                            <p>Nama:{{ $detail->menu->nama_menu }}</p>
-                                                            <p>Qty:{{ $detail->jumlah }}</p>
-                                                            <p>Subtotal:{{ $detail->subtotal }}</p>
-                                                            <hr>
+                                                            @if ($detail)
+                                                                <p>Nama:{{ $detail->menu->nama_menu }}</p>
+                                                                <p>Qty:{{ $detail->jumlah }}</p>
+                                                                <p>Subtotal:{{ $detail->subtotal }}</p>
+                                                                <hr>
+                                                            @endif
                                                         @endforeach
                                                     </td>
                                                     <td>{{ $item->total_harga }}</td>

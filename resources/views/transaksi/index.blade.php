@@ -14,9 +14,7 @@
                                     <img width="50px" src="{{ asset('storage/menu-images') }}/{{ $menu->images }}"
                                         alt="">
                                     <div>{{ $menu->nama_menu }}</div>
-                                    @foreach ($stok as $stok)
-                                        <div>Stok: {{ $stok->jumlah }}</div>
-                                    @endforeach
+                                    <div>Stok: {{ $menu->stok->jumlah }}</div>
                                 </li>
                             @endforeach
                         @endif

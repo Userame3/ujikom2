@@ -36,24 +36,25 @@
                     </div>
 
                     <div class="form-group row">
-                        <label for="nama_menu" class="col-sm-4 col-form-label">Harga</label>
+                        <label class="col-sm-4 col-form-label">Harga</label>
                         <div class="col-sm-8">
                             <input type="double" class="form-control" name="harga" value="" id="harga">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="nama_menu" class="col-sm-4 col-form-label">Stok</label>
+                        <label class="col-sm-4 col-form-label">Stok</label>
                         <div class="col-sm-8">
                             <input type="double" class="form-control" name="jumlah" id="jumlah">
                         </div>
                     </div>
 
-
-                    <img class="img-preview img-fluid" style="max-height: 200px">
-                    <div class="input-group input-group-outline my-3">
-                        <input type="file" name="images" id="images" class="form-control"
-                            onchange="previewImage()">
+                    <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Images</label>
+                        <div class="col-sm-8">
+                            <input type="file" name="images" id="images" class="form-control"
+                                onchange="previewImage()">
+                        </div>
                     </div>
 
                     <!-- <div class="btn-group">
@@ -62,7 +63,7 @@
                     </div> -->
 
                     <div class="form-group row">
-                        <label for="nama_menu" class="col-sm-4 col-form-label"> Deskripsi</label>
+                        <label class="col-sm-4 col-form-label"> Deskripsi</label>
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="deskripsi" value="" name="deskripsi">
                         </div>

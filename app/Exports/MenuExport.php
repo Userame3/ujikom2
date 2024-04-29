@@ -30,7 +30,7 @@ class MenuExport implements FromCollection, WithHeadings, WithEvents
             'Stok Id',
             'Menu',
             'Harga',
-            'Image',
+            'Images',
             'Deskripsi',
             'Tanggal input',
             'Tanggal update'
